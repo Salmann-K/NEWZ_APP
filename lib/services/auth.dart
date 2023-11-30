@@ -29,13 +29,14 @@ Future<User?> signInWithGoogle() async
     assert(!user!.isAnonymous);
     assert(await user!.getIdToken() != null);
 
-    final User? currentUser = await _auth.currentUser;
+    final User? currentUser = _auth.currentUser;
     assert(currentUser!.uid == user!.uid);
     print(user);
     return user;
   }catch(e){
     print(e);
   }
+  return null;
 
 }
 

@@ -1,11 +1,11 @@
 import 'dart:convert';
-import 'dart:ffi';
-import 'package:flutter/foundation.dart';
 import 'package:http/http.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:newz/model.dart';
 import 'package:newz/Category.dart';
+
+import 'NewsView.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -15,7 +15,7 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  TextEditingController searchController = new TextEditingController();
+  TextEditingController searchController = TextEditingController();
   List<NewsQueryModel> newsModelList = <NewsQueryModel>[];
   List<NewsQueryModel> newsModelListCarousel = <NewsQueryModel>[];
   List<String> navBarItem = [
@@ -34,7 +34,7 @@ class _HomeState extends State<Home> {
     Map data = jsonDecode(response.body);
     setState(() {
       data["articles"].forEach((element) {
-        NewsQueryModel newsQueryModel = new NewsQueryModel();
+        NewsQueryModel newsQueryModel = NewsQueryModel();
         newsQueryModel = NewsQueryModel.fromMap(element);
         newsModelList.add(newsQueryModel);
         setState(() {
@@ -56,7 +56,7 @@ class _HomeState extends State<Home> {
     Map data = jsonDecode(response.body);
     setState(() {
       data["articles"].forEach((element) {
-        NewsQueryModel newsQueryModel = new NewsQueryModel();
+        NewsQueryModel newsQueryModel = NewsQueryModel();
         newsQueryModel = NewsQueryModel.fromMap(element);
         newsModelListCarousel.add(newsQueryModel);
         setState(() {
@@ -82,7 +82,7 @@ class _HomeState extends State<Home> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.blueAccent,
-        title: Text("NEWZ",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold,color: Colors.white),),
+        title: const Text("NEWZ",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold,color: Colors.white),),
         centerTitle: true,
       ),
       body: SingleChildScrollView(
@@ -90,8 +90,8 @@ class _HomeState extends State<Home> {
           children: [
             //Search Container
             Container(
-              padding: EdgeInsets.symmetric(horizontal: 8),
-              margin: EdgeInsets.symmetric(horizontal: 24, vertical: 20),
+              padding: const EdgeInsets.symmetric(horizontal: 8),
+              margin: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
               decoration: BoxDecoration(
                   color: Colors.white, borderRadius: BorderRadius.circular(24)),
               child: Row(
@@ -105,11 +105,11 @@ class _HomeState extends State<Home> {
                       }
                     },
                     child: Container(
-                      child: Icon(
+                      margin: const EdgeInsets.fromLTRB(3, 0, 7, 0),
+                      child: const Icon(
                         Icons.search,
                         color: Colors.blueAccent,
                       ),
-                      margin: EdgeInsets.fromLTRB(3, 0, 7, 0),
                     ),
                   ),
                   Expanded(
@@ -119,7 +119,7 @@ class _HomeState extends State<Home> {
                       onSubmitted: (value) {
                         Navigator.push(context, MaterialPageRoute(builder: (context) => CategoryPage(Query: value,)));
                       },
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                           border: InputBorder.none, hintText: "Search Health"),
                     ),
                   )
@@ -128,7 +128,7 @@ class _HomeState extends State<Home> {
             ),
 
 
-            Container(
+            SizedBox(
                 height: 50,
                 child: ListView.builder(
                     shrinkWrap: true,
@@ -140,15 +140,15 @@ class _HomeState extends State<Home> {
                           Navigator.push(context, MaterialPageRoute(builder: (context) => CategoryPage(Query: navBarItem[index])));
                         },
                         child: Container(
-                          padding: EdgeInsets.symmetric(
+                          padding: const EdgeInsets.symmetric(
                               horizontal: 20, vertical: 10),
-                          margin: EdgeInsets.symmetric(horizontal: 5),
+                          margin: const EdgeInsets.symmetric(horizontal: 5),
                           decoration: BoxDecoration(
                               color: Colors.blueAccent,
                               borderRadius: BorderRadius.circular(15)),
                           child: Center(
                             child: Text(navBarItem[index],
-                                style: TextStyle(
+                                style: const TextStyle(
                                     fontSize: 19,
                                     color: Colors.white,
                                     fontWeight: FontWeight.bold)),
@@ -158,7 +158,7 @@ class _HomeState extends State<Home> {
                     })),
 
             Container(
-              margin: EdgeInsets.symmetric(vertical: 15),
+              margin: const EdgeInsets.symmetric(vertical: 15),
               child: CarouselSlider(
                 options: CarouselOptions(
                     height: 200, autoPlay: true, enlargeCenterPage: true),
@@ -166,41 +166,46 @@ class _HomeState extends State<Home> {
                   return Builder(builder: (BuildContext context) {
                     return Container(
 
-                        child : Card(
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10)
-                            ),
-                            child : Stack(
-                                children : [
-                                  ClipRRect(
-                                      borderRadius : BorderRadius.circular(10),
-                                      child : Image.network(instance.newsImg , fit: BoxFit.fitHeight, width: double.infinity,)
-                                  ) ,
-                                  Positioned(
-                                      left: 0,
-                                      right: 0,
-                                      bottom: 0,
-                                      child: Container(
+                        child : InkWell(
+                          onTap: () {
+                            Navigator.push(context, MaterialPageRoute(builder: (context)=> NewsView(instance.newsUrl)));
+                          },
+                          child: Card(
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10)
+                              ),
+                              child : Stack(
+                                  children : [
+                                    ClipRRect(
+                                        borderRadius : BorderRadius.circular(10),
+                                        child : Image.network(instance.newsImg , fit: BoxFit.fitHeight, width: double.infinity,)
+                                    ) ,
+                                    Positioned(
+                                        left: 0,
+                                        right: 0,
+                                        bottom: 0,
+                                        child: Container(
 
-                                        decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.circular(10),
-                                            gradient: LinearGradient(
-                                                colors: [
-                                                  Colors.black12.withOpacity(0),
-                                                  Colors.black
-                                                ],
-                                                begin: Alignment.topCenter,
-                                                end: Alignment.bottomCenter
-                                            )
-                                        ),
-                                        child : Container(
-                                            padding: EdgeInsets.symmetric(horizontal: 5 , vertical: 10),
-                                            child:Container( margin: EdgeInsets.symmetric(horizontal: 10), child: Text(instance.newsHead , style: TextStyle(fontSize: 18 , color: Colors.white , fontWeight: FontWeight.bold),))
-                                        ),
-                                      )
-                                  ),
-                                ]
-                            )
+                                          decoration: BoxDecoration(
+                                              borderRadius: BorderRadius.circular(10),
+                                              gradient: LinearGradient(
+                                                  colors: [
+                                                    Colors.black12.withOpacity(0),
+                                                    Colors.black
+                                                  ],
+                                                  begin: Alignment.topCenter,
+                                                  end: Alignment.bottomCenter
+                                              )
+                                          ),
+                                          child : Container(
+                                              padding: const EdgeInsets.symmetric(horizontal: 5 , vertical: 10),
+                                              child:Container( margin: const EdgeInsets.symmetric(horizontal: 10), child: Text(instance.newsHead , style: const TextStyle(fontSize: 18 , color: Colors.white , fontWeight: FontWeight.bold),))
+                                          ),
+                                        )
+                                    ),
+                                  ]
+                              )
+                          ),
                         )
                     );
                   });
@@ -213,8 +218,8 @@ class _HomeState extends State<Home> {
               child: Column(
                 children: [
                   Container(
-                    margin : EdgeInsets.fromLTRB(15, 25, 0, 0),
-                    child: Row(
+                    margin : const EdgeInsets.fromLTRB(15, 25, 0, 0),
+                    child: const Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
 
@@ -224,66 +229,71 @@ class _HomeState extends State<Home> {
                     ),
                   ),
                   ListView.builder(
-                      physics: NeverScrollableScrollPhysics(),
+                      physics: const NeverScrollableScrollPhysics(),
                       shrinkWrap: true,
                       itemCount: newsModelList.length,
                       itemBuilder: (context, index) {
                         return Container(
-                          margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                          child: Card(
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(15)),
-                              elevation: 1.0,
-                              child: Stack(
-                                children: [
-                                  ClipRRect(
-                                      borderRadius: BorderRadius.circular(15),
-                                      child: Image.network(newsModelList[index].newsImg ,fit: BoxFit.fitHeight, height: 230,width: double.infinity, )),
+                          margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                          child: InkWell(
+                            onTap: () {
+                              Navigator.push(context , MaterialPageRoute(builder: (context)=>NewsView(newsModelList[index].newsUrl)));
+                            },
+                            child: Card(
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(15)),
+                                elevation: 1.0,
+                                child: Stack(
+                                  children: [
+                                    ClipRRect(
+                                        borderRadius: BorderRadius.circular(15),
+                                        child: Image.network(newsModelList[index].newsImg ,fit: BoxFit.fitHeight, height: 230,width: double.infinity, )),
 
-                                  Positioned(
-                                      left: 0,
-                                      right: 0,
-                                      bottom: 0,
-                                      child: Container(
+                                    Positioned(
+                                        left: 0,
+                                        right: 0,
+                                        bottom: 0,
+                                        child: Container(
 
-                                          decoration: BoxDecoration(
-                                              borderRadius: BorderRadius.circular(15),
-                                              gradient: LinearGradient(
-                                                  colors: [
-                                                    Colors.black12.withOpacity(0),
-                                                    Colors.black
-                                                  ],
-                                                  begin: Alignment.topCenter,
-                                                  end: Alignment.bottomCenter
-                                              )
-                                          ),
-                                          padding: EdgeInsets.fromLTRB(15, 15, 10, 8),
-                                          child: Column(
-                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                            children: [
-                                              Text(
-                                                newsModelList[index].newsHead,
-                                                style: TextStyle(
-                                                    color: Colors.white,
-                                                    fontSize: 18,
-                                                    fontWeight: FontWeight.bold),
-                                              ),
-                                              Text(newsModelList[index].newsDes.length > 50 ? "${newsModelList[index].newsDes.substring(0,55)}...." : newsModelList[index].newsDes , style: TextStyle(color: Colors.white , fontSize: 12)
-                                                ,)
-                                            ],
-                                          )))
-                                ],
-                              )),
+                                            decoration: BoxDecoration(
+                                                borderRadius: BorderRadius.circular(15),
+                                                gradient: LinearGradient(
+                                                    colors: [
+                                                      Colors.black12.withOpacity(0),
+                                                      Colors.black
+                                                    ],
+                                                    begin: Alignment.topCenter,
+                                                    end: Alignment.bottomCenter
+                                                )
+                                            ),
+                                            padding: const EdgeInsets.fromLTRB(15, 15, 10, 8),
+                                            child: Column(
+                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  newsModelList[index].newsHead,
+                                                  style: const TextStyle(
+                                                      color: Colors.white,
+                                                      fontSize: 18,
+                                                      fontWeight: FontWeight.bold),
+                                                ),
+                                                Text(newsModelList[index].newsDes.length > 50 ? "${newsModelList[index].newsDes.substring(0,55)}...." : newsModelList[index].newsDes , style: const TextStyle(color: Colors.white , fontSize: 12)
+                                                  ,)
+                                              ],
+                                            )))
+                                  ],
+                                )),
+                          ),
                         );
                       }),
                   Container(
-                    padding: EdgeInsets.fromLTRB(0, 10, 0, 5),
+                    padding: const EdgeInsets.fromLTRB(0, 10, 0, 5),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         ElevatedButton(onPressed: () {
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => CategoryPage(Query: "Technology")));
-                        }, child: Text("SHOW MORE")),
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => const CategoryPage(Query: "Technology")));
+                        }, child: const Text("SHOW MORE")),
                       ],
                     ),
                   )

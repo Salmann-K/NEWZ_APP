@@ -15,14 +15,14 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Login To App"),),
+      appBar: AppBar(title: const Text("Login To App"),),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             SignInButton(Buttons.Google, onPressed:() async{
               await signInWithGoogle();
-              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> Home()));
+              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=> const Home()));
             })
           ],
         ),

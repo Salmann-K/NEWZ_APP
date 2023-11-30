@@ -8,7 +8,7 @@ import 'model.dart';
 class CategoryPage extends StatefulWidget {
   final String Query;
 
-  CategoryPage({required this.Query});
+  const CategoryPage({super.key, required this.Query});
 
   @override
   State<CategoryPage> createState() => _CategoryPageState();
@@ -30,7 +30,7 @@ class _CategoryPageState extends State<CategoryPage> {
     Map data = jsonDecode(response.body);
     setState(() {
       data["articles"].forEach((element) {
-        NewsQueryModel newsQueryModel = new NewsQueryModel();
+        NewsQueryModel newsQueryModel = NewsQueryModel();
         newsQueryModel = NewsQueryModel.fromMap(element);
         newsModelList.add(newsQueryModel);
         setState(() {
@@ -53,10 +53,10 @@ class _CategoryPageState extends State<CategoryPage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.blueAccent,
-        iconTheme: IconThemeData(
+        iconTheme: const IconThemeData(
           color: Colors.white
         ),
-        title: Text("NEWZ",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold,color: Colors.white),),
+        title: const Text("NEWZ",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold,color: Colors.white),),
         centerTitle: true,
       ),
       body:
@@ -65,23 +65,23 @@ class _CategoryPageState extends State<CategoryPage> {
           child: Column(
             children: [
               Container(
-                margin : EdgeInsets.fromLTRB(15, 25, 0, 0),
+                margin : const EdgeInsets.fromLTRB(15, 25, 0, 0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
         
-                    Text(widget.Query, style: TextStyle(fontWeight: FontWeight.bold , fontSize: 28
+                    Text(widget.Query, style: const TextStyle(fontWeight: FontWeight.bold , fontSize: 28
                     ),),
                   ],
                 ),
               ),
               ListView.builder(
-                  physics: NeverScrollableScrollPhysics(),
+                  physics: const NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
                   itemCount: newsModelList.length,
                   itemBuilder: (context, index) {
                     return Container(
-                      margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                      margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                       child: Card(
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(15)),
@@ -109,18 +109,18 @@ class _CategoryPageState extends State<CategoryPage> {
                                               end: Alignment.bottomCenter
                                           )
                                       ),
-                                      padding: EdgeInsets.fromLTRB(15, 15, 10, 8),
+                                      padding: const EdgeInsets.fromLTRB(15, 15, 10, 8),
                                       child: Column(
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
                                           Text(
                                             newsModelList[index].newsHead,
-                                            style: TextStyle(
+                                            style: const TextStyle(
                                                 color: Colors.white,
                                                 fontSize: 18,
                                                 fontWeight: FontWeight.bold),
                                           ),
-                                          Text(newsModelList[index].newsDes.length > 50 ? "${newsModelList[index].newsDes.substring(0,55)}...." : newsModelList[index].newsDes , style: TextStyle(color: Colors.white , fontSize: 12)
+                                          Text(newsModelList[index].newsDes.length > 50 ? "${newsModelList[index].newsDes.substring(0,55)}...." : newsModelList[index].newsDes , style: const TextStyle(color: Colors.white , fontSize: 12)
                                             ,)
                                         ],
                                       )))
@@ -129,11 +129,11 @@ class _CategoryPageState extends State<CategoryPage> {
                     );
                   }),
               Container(
-                padding: EdgeInsets.fromLTRB(0, 10, 0, 5),
+                padding: const EdgeInsets.fromLTRB(0, 10, 0, 5),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    ElevatedButton(onPressed: () {}, child: Text("SHOW MORE")),
+                    ElevatedButton(onPressed: () {}, child: const Text("SHOW MORE")),
                   ],
                 ),
               )
