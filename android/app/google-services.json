@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "391459066074",
+    "project_id": "newz-33e69",
+    "storage_bucket": "newz-33e69.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:391459066074:android:6ead658df9a3c7033f15e3",
+        "android_client_info": {
+          "package_name": "com.example.newz"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "391459066074-e57i9tb9ssus0cq03t8tslnuqvqvesvq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.newz",
+            "certificate_hash": "fac228add349a64fbf6ae0f9c0d6b247bf0aa772"
+          }
+        },
+        {
+          "client_id": "391459066074-bm43ho4cpqc1mlthafusedj4gn1eqdqe.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDgn9Xf_WNZIgfCHhNZiFIHmYPmDnAQjzI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "391459066074-bm43ho4cpqc1mlthafusedj4gn1eqdqe.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

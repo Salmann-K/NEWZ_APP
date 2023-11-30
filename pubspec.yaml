@@ -37,6 +37,10 @@ dependencies:
   cupertino_icons: ^1.0.2
   carousel_slider: ^4.2.1
   http:
+  firebase_core: ^2.23.0
+  firebase_auth:
+  google_sign_in:
+  flutter_signin_button:
 
 dev_dependencies:
   flutter_test:

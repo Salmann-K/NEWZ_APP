@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:newz/login.dart';
 
 import 'home.dart';
 
@@ -19,7 +20,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: Home(),
+      home: LoginScreen(),
     );
   }
 }
